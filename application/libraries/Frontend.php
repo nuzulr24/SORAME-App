@@ -7,9 +7,10 @@ class Frontend {
 
     public function __construct()
     {
-            // Assign the CodeIgniter super-object
-            $this->CI =& get_instance();
+        $this->CI =& get_instance();
     }
+
+    
 
     public function display_themes($alias, $partial, $data = null) {
         switch ($alias) {
@@ -38,6 +39,18 @@ class Frontend {
                     $this->CI->load->view('frontend/auth/header', $data);
                     $this->CI->load->view($partial, $data);
                     $this->CI->load->view('frontend/auth/footer', $data);
+                }
+                break;
+
+            case 'site':
+                if(!$data) {
+                    $this->CI->load->view('frontend/site/header');
+                    $this->CI->load->view($partial);
+                    $this->CI->load->view('frontend/site/footer');
+                } else {
+                    $this->CI->load->view('frontend/site/header', $data);
+                    $this->CI->load->view($partial, $data);
+                    $this->CI->load->view('frontend/site/footer', $data);
                 }
                 break;
 
