@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-header('Content-Type: application/json');
+// header('Content-Type: application/json');
 
 class Instagram
 {
@@ -52,7 +52,7 @@ class Instagram
 
     public function sumAllPost($val) 
     {
-        return array_sum($val);
+        return array_sum($val) / 12;
     }
 
     public function cleanNumber($val)
@@ -224,7 +224,7 @@ class Instagram
 
     public function getAverageHastag()
     {
-        $html = file_get_html("http://best-hashtags.com/best-hashtags.php");
+        $html = file_get_html($this->base_path . "best-hashtags.php");
         $list = array();
         for ($i = 0; $i < 10; $i++) {
             $data = $html->find('tbody', 0)->find('tr', $i);

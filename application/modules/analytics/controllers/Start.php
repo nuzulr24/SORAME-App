@@ -37,20 +37,10 @@ class Start extends MX_Controller
         // unset($st[0]);
         // print_r($st);
         $ch = curl_init();
-
-        // set url
         curl_setopt($ch, CURLOPT_URL, "https://shopee.co.id/api/v2/search_items/?by=relevancy&keyword=laptop&limit=100&newest=0&order=desc&page_type=search&version=2");
-
-        // return the transfer as a string
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-        // $output contains the output string
         $output = curl_exec($ch);
-
-        // tutup curl
         curl_close($ch);
-
-        // menampilkan hasil curl
         echo $output;
 
         // if ($curl->error) {
@@ -180,16 +170,18 @@ class Start extends MX_Controller
                 ============================================<br>";
 
                     $groupingData = array();
+                    $groupingComment = array();
                     $hasFollowers = $userDetail['edge_followed_by']['count'];
                     for ($i = 0; $i < count($userDetail['edge_owner_to_timeline_media']['edges']); $i++) {
-                        $haveLikes = $userDetail['edge_owner_to_timeline_media']['edges'][$i]['node']['edge_media_to_comment']['count'];
+                        $haveLikes = $userDetail['edge_owner_to_timeline_media']['edges'][$i]['node']['edge_liked_by']['count'];
                         $haveComments = $userDetail['edge_owner_to_timeline_media']['edges'][$i]['node']['edge_media_to_comment']['count'];
                         $mediaImage = $userDetail['edge_owner_to_timeline_media']['edges'][$i]['node']['thumbnail_src'];
                         $calculateEngagement = $instagram->sum_perPost([$hasFollowers, $haveLikes, $haveComments]);
+                        $calculateComment = array_sum([$haveComments]) / 12;
                         array_push($groupingData, $calculateEngagement);
+                        array_push($groupingComment, $calculateComment);
 
                         echo "
-                    =============================================</br>
                     <b>Post $i</b><br>
                     Jumlah Like = $haveLikes<br>
                     Jumlah Komentar = $haveComments<br>
@@ -199,7 +191,9 @@ class Start extends MX_Controller
                     }
 
                     echo "Total Engagement 12 Post terakhir sebesar " .
-                    $instagram->sumAllPost($groupingData) . "%";
+                    $instagram->sumAllPost($groupingData) . "%" . "<br>" . 
+                    "Total Comment 12 Post sebesar ";
+                    echo $instagram->roundNum(array_sum($groupingComment));
 
                 }
             }
