@@ -1,0 +1,12 @@
+Cara Menggunakan fitur yang ku buat ini
+
+[INSTAGRAM FITUR]
+===============================================
+Ambil Hastag Terbaru : <link path project>/analytics/start/getNewHastag
+Ambil Hastag Paling Terdebes : <link path project>/analytics/start/getBestHastag
+Ambil Detail berdasarkan Hastag yang dicari : <link path project>/analytics/start/getDetailHastag/<hastag>
+Ambil Informasi Akun : <link path project>/analytics/start/getUsername/<username>
+===============================================
+
+[SHOPEE FITUR]
+================================================
